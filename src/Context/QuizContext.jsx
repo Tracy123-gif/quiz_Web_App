@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 
+
 export const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
   const [quizData, setQuizData] = useState([]);
   const [isAllowed, setIsAllowed] = useState(false);
   const [quizSlice, setQuizSlice] = useState(''); // Stores number of questions
+
+  
 
   const handleQuizStart = (event) => {
     event.preventDefault(); // Correct this line
@@ -17,6 +20,11 @@ const QuizProvider = ({ children }) => {
       alert("Please select a number of questions");
     }
   };
+
+  const backToHome =()=>{
+    setIsAllowed(false)
+  }
+
 
   useEffect(() => {
     if (isAllowed && quizSlice) {
@@ -34,7 +42,7 @@ const QuizProvider = ({ children }) => {
   }, [isAllowed, quizSlice]); // Fetch quiz data when allowed and quizSlice is set
 
   return (
-    <QuizContext.Provider value={{ quizData, isAllowed, handleQuizStart, quizSlice, setQuizSlice }}>
+    <QuizContext.Provider value={{ quizData, isAllowed, handleQuizStart, quizSlice, setQuizSlice, backToHome }}>
       {children}
     </QuizContext.Provider>
   );
